@@ -1,6 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import { NewsArticle } from '../types/index.js';
-import { mockApiClient } from './mockApi.js';
 
 // API Response interfaces
 export interface NewsResponse {
@@ -73,12 +72,9 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001
 const DEFAULT_TIMEOUT = 30000; // 30 seconds
 const MAX_RETRIES = 3;
 const RETRY_DELAY = 1000; // 1 second
-const USE_MOCK_API = import.meta.env.VITE_USE_MOCK_API === 'true';
 
 console.log('🔧 API Configuration [LOADED AT ' + new Date().toISOString() + ']:', {
-  USE_MOCK_API,
   API_BASE_URL,
-  VITE_USE_MOCK_API: import.meta.env.VITE_USE_MOCK_API,
   DEV: import.meta.env.DEV
 });
 
@@ -276,11 +272,6 @@ class ApiClient {
    * Get recent cached articles for a company
    */
   async getRecentNews(companyName: string, limit: number = 10): Promise<NewsResponse> {
-    // Use mock API in development or when explicitly enabled
-    if (USE_MOCK_API) {
-      return mockApiClient.getRecentNews(companyName, limit);
-    }
-
     const response = await this.client.get<NewsResponse>(
       `/api/news/${encodeURIComponent(companyName)}/recent`,
       {
@@ -295,11 +286,6 @@ class ApiClient {
    * Search for companies
    */
   async searchCompanies(query: string): Promise<CompanySearchResponse> {
-    // Use mock API in development or when explicitly enabled
-    if (USE_MOCK_API) {
-      return mockApiClient.searchCompanies(query);
-    }
-
     const response = await this.client.get<CompanySearchResponse>('/api/news/search/companies', {
       params: { q: query },
     });
@@ -319,11 +305,6 @@ class ApiClient {
       useCache?: boolean;
     } = {}
   ): Promise<ContentGenerationResponse> {
-    // Use mock API in development or when explicitly enabled
-    if (USE_MOCK_API) {
-      return mockApiClient.generateContent(highlights, companyName, options);
-    }
-
     const { platforms = ['linkedin'], tone = 'professional', useCache = true } = options;
 
     const response = await this.client.post<ContentGenerationResponse>('/api/content/generate', {
@@ -348,11 +329,6 @@ class ApiClient {
       tone?: 'professional' | 'casual' | 'enthusiastic';
     } = {}
   ): Promise<ContentGenerationResponse> {
-    // Use mock API in development or when explicitly enabled
-    if (USE_MOCK_API) {
-      return mockApiClient.regenerateContent(articleId, companyName, options);
-    }
-
     const { platforms = ['linkedin'], tone = 'professional' } = options;
 
     const response = await this.client.post<ContentGenerationResponse>(
@@ -371,11 +347,6 @@ class ApiClient {
    * Check API health status
    */
   async checkHealth(): Promise<{ status: string; timestamp: string }> {
-    // Use mock API in development or when explicitly enabled
-    if (USE_MOCK_API) {
-      return mockApiClient.checkHealth();
-    }
-
     const response = await this.client.get('/api/health');
     return response.data;
   }
@@ -393,11 +364,6 @@ class ApiClient {
     }>;
     timestamp: string;
   }> {
-    // Use mock API in development or when explicitly enabled
-    if (USE_MOCK_API) {
-      return mockApiClient.checkContentHealth();
-    }
-
     const response = await this.client.get('/api/content/health');
     return response.data;
   }
