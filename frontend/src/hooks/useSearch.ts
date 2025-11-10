@@ -165,6 +165,7 @@ export const useSearch = () => {
         }
       }
 
+      console.log('🔍 Searching for:', trimmedQuery);
       const response = await apiClient.getCompanyNews(trimmedQuery, {
         limit: 10,
         platforms: options.platforms || ['linkedin', 'twitter', 'facebook', 'instagram'],
@@ -172,15 +173,23 @@ export const useSearch = () => {
         forceRefresh: options.forceRefresh || false
       });
 
+      console.log('📦 API Response:', response);
+      console.log('📰 Articles count:', response.articles?.length);
+
       // Transform API response to match our types
-      const articles: NewsArticle[] = response.articles.map((article: any) => ({
-        id: article.id,
-        title: article.title,
-        highlights: article.highlights || [],
-        sourceUrl: article.source_url || article.sourceUrl,
-        sourceName: article.source_name || article.sourceName,
-        publishedAt: new Date(article.published_at || article.publishedAt)
-      }));
+      const articles: NewsArticle[] = response.articles.map((article: any) => {
+        console.log('🔄 Transforming article:', article.title);
+        return {
+          id: article.id,
+          title: article.title,
+          highlights: article.highlights || [],
+          sourceUrl: article.source_url || article.sourceUrl,
+          sourceName: article.source_name || article.sourceName,
+          publishedAt: new Date(article.published_at || article.publishedAt)
+        };
+      });
+
+      console.log('✅ Transformed articles:', articles.length);
 
       // Transform social content from API response
       const socialContent: SocialMediaContent = {

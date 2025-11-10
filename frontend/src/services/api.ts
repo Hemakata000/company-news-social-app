@@ -265,6 +265,7 @@ class ApiClient {
     });
 
     console.log('✅ Real API response received:', response.data.articles?.length, 'articles');
+    console.log('📊 Full response data:', JSON.stringify(response.data, null, 2));
     return response.data;
   }
 
