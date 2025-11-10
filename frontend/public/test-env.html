@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Environment Test</title>
+</head>
+<body>
+    <h1>Environment Variable Test</h1>
+    <div id="result"></div>
+    <script type="module">
+        const useMock = import.meta.env.VITE_USE_MOCK_API;
+        const apiUrl = import.meta.env.VITE_API_BASE_URL;
+        const isDev = import.meta.env.DEV;
+        
+        document.getElementById('result').innerHTML = `
+            <p><strong>VITE_USE_MOCK_API:</strong> ${useMock}</p>
+            <p><strong>VITE_API_BASE_URL:</strong> ${apiUrl}</p>
+            <p><strong>DEV mode:</strong> ${isDev}</p>
+            <p><strong>USE_MOCK_API should be:</strong> ${useMock === 'true'}</p>
+        `;
+        
+        console.log('Environment:', {
+            VITE_USE_MOCK_API: useMock,
+            VITE_API_BASE_URL: apiUrl,
+            DEV: isDev,
+            USE_MOCK_API: useMock === 'true'
+        });
+    </script>
+</body>
+</html>

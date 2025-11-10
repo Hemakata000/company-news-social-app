@@ -1,0 +1,46 @@
+{
+  "name": "company-news-social-app-backend",
+  "version": "1.0.0",
+  "description": "Backend API for Company News Social App",
+  "main": "dist/server.js",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "start:prod": "NODE_ENV=production node dist/server.js",
+    "build:prod": "NODE_ENV=production tsc",
+    "lint": "eslint . --ext ts --report-unused-disable-directives --max-warnings 0",
+    "lint:fix": "eslint . --ext ts --fix",
+    "format": "prettier --write \"src/**/*.{ts,js,json,md}\"",
+    "migrate": "tsx src/migrations/migrate.ts",
+    "health-check": "curl -f http://localhost:3001/api/health || exit 1",
+    "prestart": "npm run build",
+    "prestart:prod": "npm run build:prod && npm run migrate"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "express-rate-limit": "^7.1.5",
+    "cors": "^2.8.5",
+    "helmet": "^7.1.0",
+    "dotenv": "^16.3.1",
+    "sql.js": "^1.10.3",
+    "axios": "^1.6.0",
+    "openai": "^4.20.1",
+    "@anthropic-ai/sdk": "^0.24.3",
+    "@types/express": "^4.17.21",
+    "@types/cors": "^2.8.17",
+    "compression": "^1.7.4",
+    "express-slow-down": "^2.0.1",
+    "express-validator": "^7.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@typescript-eslint/eslint-plugin": "^6.14.0",
+    "@typescript-eslint/parser": "^6.14.0",
+    "eslint": "^8.55.0",
+    "prettier": "^3.1.1",
+    "tsx": "^4.6.2",
+    "typescript": "^5.2.2"
+  }
+}

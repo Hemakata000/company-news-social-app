@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company News Social App - Generate Social Media Content</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description"
+        content="Generate engaging social media content from company news instantly. Get LinkedIn, Twitter, Facebook, and Instagram posts with AI-powered highlights.">
+    <meta name="keywords"
+        content="social media, content generation, company news, LinkedIn, Twitter, Facebook, Instagram, AI content">
+    <meta name="author" content="Company News Social App">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Company News Social App">
+    <meta property="og:description" content="Generate engaging social media content from company news instantly">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://your-domain.com">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Company News Social App">
+    <meta name="twitter:description" content="Generate engaging social media content from company news instantly">
+
+    <!-- Favicon -->
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📰</text></svg>">
+
+    <style>
+        :root {
+            --theme-primary: #2563eb;
+            --theme-secondary: #1d4ed8;
+            --theme-accent: #3b82f6;
+            --positive-color: #10b981;
+            --negative-color: #ef4444;
+            --neutral-color: #6b7280;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background-color: #f9fafb;
+            color: #111827;
+            line-height: 1.6;
+            transition: background-color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Navigation */
+        nav {
+            background: white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid #e5e7eb;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #111827;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.375rem;
+            text-decoration: none;
+            color: #374151;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: #2563eb;
+            background-color: #eff6ff;
+        }
+
+        /* Main Content */
+        main {
+            padding: 2rem 0;
+            min-height: calc(100vh - 64px);
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #111827;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: #6b7280;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Search Section */
+        .search-section {
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .search-container {
+            display: flex;
+            gap: 1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: 2px solid #d1d5db;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .search-btn {
+            background: var(--theme-primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .search-btn:hover {
+            background: var(--theme-secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .search-btn:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .search-suggestions {
+            margin-top: 1rem;
+            text-align: center;
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+
+        .suggestion-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+            margin-top: 0.5rem;
+        }
+
+        .suggestion-chip {
+            background: #f3f4f6;
+            color: #374151;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .suggestion-chip:hover {
+            background: #e5e7eb;
+            border-color: #d1d5db;
+        }
+
+        /* Results Section */
+        .results-section {
+            display: none;
+        }
+
+        .results-section.show {
+            display: block;
+        }
+
+        .news-articles {
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .article {
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .article:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .article h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .article .source {
+            color: #6b7280;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .highlights {
+            list-style: none;
+            padding: 0;
+        }
+
+        .highlights li {
+            background: #f8fafc;
+            padding: 0.75rem 1rem;
+            border-radius: 0.375rem;
+            margin-bottom: 0.5rem;
+            border-left: 4px solid #2563eb;
+            position: relative;
+        }
+
+        .highlights li:before {
+            content: "✓";
+            color: #2563eb;
+            font-weight: bold;
+            position: absolute;
+            left: -12px;
+            background: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+        }
+
+        /* Social Content */
+        .social-content {
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+        }
+
+        .platform-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #e5e7eb;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+        }
+
+        .platform-tab {
+            padding: 0.75rem 1rem;
+            border: none;
+            background: none;
+            color: #6b7280;
+            font-weight: 500;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .platform-tab.active {
+            color: var(--theme-primary);
+            border-bottom-color: var(--theme-primary);
+        }
+
+        .platform-tab:hover {
+            color: #374151;
+        }
+
+        .platform-content {
+            display: none;
+        }
+
+        .platform-content.active {
+            display: block;
+        }
+
+        .social-post {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .post-content {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        .post-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #6b7280;
+            font-size: 0.875rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .hashtags {
+            color: #2563eb;
+            font-weight: 500;
+        }
+
+        .copy-btn {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .copy-btn:hover {
+            background: #059669;
+            transform: translateY(-1px);
+        }
+
+        /* Loading State */
+        .loading {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: #6b7280;
+        }
+
+        .spinner {
+            border: 3px solid #f3f4f6;
+            border-top: 3px solid #2563eb;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Footer */
+        footer {
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            padding: 2rem 0;
+            margin-top: 4rem;
+            text-align: center;
+            color: #6b7280;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .search-container {
+                flex-direction: column;
+            }
+
+            .platform-tabs {
+                flex-wrap: wrap;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .post-meta {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .suggestion-chips {
+                justify-content: flex-start;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Accessibility */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* Focus styles */
+        *:focus {
+            outline: 2px solid var(--theme-primary);
+            outline-offset: 2px;
+        }
+
+        /* Sentiment-based sections */
+        .sentiment-section {
+            margin-bottom: 2rem;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+
+        .sentiment-header {
+            padding: 1rem 1.5rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.125rem;
+        }
+
+        .sentiment-positive .sentiment-header {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+
+        .sentiment-negative .sentiment-header {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+        }
+
+        .sentiment-neutral .sentiment-header {
+            background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+            color: white;
+        }
+
+        .sentiment-body {
+            background: white;
+            padding: 1.5rem;
+        }
+
+        /* Source link styling */
+        .source-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--theme-primary);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            border: 2px solid var(--theme-primary);
+            transition: all 0.2s;
+            margin-top: 0.5rem;
+        }
+
+        .source-link:hover {
+            background: var(--theme-primary);
+            color: white;
+            transform: translateX(4px);
+        }
+
+        .verified-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            background: #10b981;
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .time-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            background: #f3f4f6;
+            color: #6b7280;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            margin-left: 0.5rem;
+        }
+
+        .old-news-warning {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.375rem;
+            color: #92400e;
+        }
+
+        /* Enhanced animations */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .article {
+            animation: slideIn 0.3s ease-out;
+            transition: all 0.3s ease;
+        }
+
+        .article:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+
+        /* Theme transition */
+        nav, .search-btn, .platform-tab.active, .copy-btn {
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="nav-container">
+                <a href="#" class="logo">
+                    📰 Company News Social
+                </a>
+                <div class="nav-links">
+                    <a href="#" class="nav-link active">Search</a>
+                    <a href="#about" class="nav-link">About</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <!-- Hero Section -->
+            <div class="hero">
+                <h1>Company News & Social Content Generator</h1>
+                <p>Get the latest company news and generate engaging social media content instantly for LinkedIn,
+                    Twitter, Facebook, and Instagram</p>
+            </div>
+
+            <!-- Search Section -->
+            <div class="search-section">
+                <div class="search-container">
+                    <input type="text" class="search-input"
+                        placeholder="Enter company name (e.g., Apple, Microsoft, Tesla)..." id="searchInput"
+                        aria-label="Company name search">
+                    <button class="search-btn" id="searchBtn" aria-label="Search for company news">
+                        🔍 Search
+                    </button>
+                </div>
+                <div class="search-suggestions">
+                    <p>Try searching for:</p>
+                    <div class="suggestion-chips">
+                        <span class="suggestion-chip" data-company="apple">Apple</span>
+                        <span class="suggestion-chip" data-company="microsoft">Microsoft</span>
+                        <span class="suggestion-chip" data-company="google">Google</span>
+                        <span class="suggestion-chip" data-company="tesla">Tesla</span>
+                        <span class="suggestion-chip" data-company="amazon">Amazon</span>
+                        <span class="suggestion-chip" data-company="accenture">Accenture</span>
+                        <span class="suggestion-chip" data-company="wipro">Wipro</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Loading State -->
+            <div class="loading" id="loadingState" style="display: none;">
+                <div class="spinner" aria-label="Loading"></div>
+                <p>Fetching latest company news and generating content...</p>
+            </div>
+
+            <!-- Results Section -->
+            <div class="results-section" id="resultsSection">
+                <!-- News Articles -->
+                <div class="news-articles fade-in">
+                    <h2 class="section-title">📈 Latest News Highlights</h2>
+                    <div id="newsContainer"></div>
+                </div>
+
+                <!-- Social Content -->
+                <div class="social-content fade-in">
+                    <h2 class="section-title">📱 Generated Social Media Content</h2>
+                    <div class="platform-tabs" role="tablist">
+                        <button class="platform-tab active" data-platform="linkedin" role="tab" aria-selected="true">
+                            💼 LinkedIn
+                        </button>
+                        <button class="platform-tab" data-platform="twitter" role="tab" aria-selected="false">
+                            🐦 Twitter
+                        </button>
+                        <button class="platform-tab" data-platform="facebook" role="tab" aria-selected="false">
+                            📘 Facebook
+                        </button>
+                        <button class="platform-tab" data-platform="instagram" role="tab" aria-selected="false">
+                            📸 Instagram
+                        </button>
+                    </div>
+                    <div id="socialContainer" role="tabpanel"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Company News Social App. Built with ❤️ for content creators.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Company brand colors for dynamic theming
+        const companyThemes = {
+            apple: { primary: '#000000', secondary: '#A6AAAE', accent: '#0071E3', name: 'Apple' },
+            microsoft: { primary: '#00A4EF', secondary: '#F25022', accent: '#7FBA00', name: 'Microsoft' },
+            google: { primary: '#4285F4', secondary: '#EA4335', accent: '#FBBC04', name: 'Google' },
+            tesla: { primary: '#E82127', secondary: '#000000', accent: '#CC0000', name: 'Tesla' },
+            amazon: { primary: '#FF9900', secondary: '#146EB4', accent: '#232F3E', name: 'Amazon' },
+            accenture: { primary: '#A100FF', secondary: '#7B1FA2', accent: '#9C27B0', name: 'Accenture' },
+            wipro: { primary: '#7B1FA2', secondary: '#9C27B0', accent: '#AB47BC', name: 'Wipro' }
+        };
+
+        // Verified news sources
+        const verifiedSources = [
+            'Reuters', 'Bloomberg', 'CNBC', 'Wall Street Journal', 'Financial Times',
+            'TechCrunch', 'MarketWatch', 'Business Insider', 'Tech News Daily',
+            'Business Technology News', 'Tech Innovation Today', 'Healthcare IT News',
+            'Consulting Weekly', 'Auto News', 'Electric Vehicle Times', 'Logistics Today',
+            'Cloud Computing News', 'AI Weekly', 'Science Today', 'Environmental Tech'
+        ];
+
+        // Sentiment analysis function
+        function analyzeSentiment(title, highlights) {
+            const text = (title + ' ' + highlights.join(' ')).toLowerCase();
+            
+            const positiveKeywords = ['growth', 'profit', 'success', 'innovation', 'breakthrough', 'record', 
+                'expansion', 'achievement', 'advance', 'improve', 'increase', 'gain', 'positive', 'strong',
+                'unveils', 'launches', 'announces', 'partnership', 'award', 'leading', 'revolutionary'];
+            
+            const negativeKeywords = ['loss', 'decline', 'lawsuit', 'scandal', 'layoff', 'crisis', 'failure',
+                'drop', 'fall', 'decrease', 'negative', 'weak', 'concern', 'issue', 'problem', 'delay',
+                'cut', 'reduce', 'warning', 'risk', 'threat', 'challenge'];
+            
+            let positiveCount = 0;
+            let negativeCount = 0;
+            
+            positiveKeywords.forEach(keyword => {
+                if (text.includes(keyword)) positiveCount++;
+            });
+            
+            negativeKeywords.forEach(keyword => {
+                if (text.includes(keyword)) negativeCount++;
+            });
+            
+            if (positiveCount > negativeCount) return 'positive';
+            if (negativeCount > positiveCount) return 'negative';
+            return 'neutral';
+        }
+
+        // Check if article is within 48 hours
+        function isWithin48Hours(publishedDate) {
+            const now = new Date();
+            const articleDate = new Date(publishedDate);
+            const hoursDiff = (now - articleDate) / (1000 * 60 * 60);
+            return hoursDiff <= 48;
+        }
+
+        // Format time ago
+        function formatTimeAgo(publishedDate) {
+            const now = new Date();
+            const articleDate = new Date(publishedDate);
+            const hoursDiff = Math.floor((now - articleDate) / (1000 * 60 * 60));
+            
+            if (hoursDiff < 1) return 'Just now';
+            if (hoursDiff < 24) return `${hoursDiff} hour${hoursDiff > 1 ? 's' : ''} ago`;
+            const daysDiff = Math.floor(hoursDiff / 24);
+            return `${daysDiff} day${daysDiff > 1 ? 's' : ''} ago`;
+        }
+
+        // Apply company theme
+        function applyCompanyTheme(company) {
+            const theme = companyThemes[company] || companyThemes.apple;
+            document.documentElement.style.setProperty('--theme-primary', theme.primary);
+            document.documentElement.style.setProperty('--theme-secondary', theme.secondary);
+            document.documentElement.style.setProperty('--theme-accent', theme.accent);
+            
+            // Update page title
+            document.title = `${theme.name} - Company News Social App`;
+        }
+
+        // Enhanced mock data with more companies
+        const mockData = {
+            apple: {
+                articles: [
+                    {
+                        title: "Apple Unveils Revolutionary AI Features in Latest iOS Update",
+                        source: "Tech News Daily • 2 hours ago",
+                        highlights: [
+                            "Apple introduces advanced AI-powered Siri capabilities with natural language processing",
+                            "New machine learning features enhance photo editing and organization",
+                            "Privacy-first approach ensures user data remains secure while using AI features"
+                        ]
+                    },
+                    {
+                        title: "Apple Reports Record Q4 Earnings Driven by iPhone Sales",
+                        source: "Financial Times • 5 hours ago",
+                        highlights: [
+                            "iPhone 15 series drives 12% increase in quarterly revenue",
+                            "Services division continues strong growth with 18% year-over-year increase",
+                            "Apple announces $90 billion share buyback program"
+                        ]
+                    }
+                ],
+                social: {
+                    linkedin: [
+                        {
+                            content: "🚀 Apple continues to lead innovation with groundbreaking AI features in iOS! The new Siri capabilities showcase how privacy-first AI can transform user experience while keeping data secure. Exciting times ahead for mobile technology!\n\n#Apple #AI #Innovation #Privacy #iOS #Technology",
+                            hashtags: "#Apple #AI #Innovation #Privacy #iOS #Technology",
+                            characterCount: 267
+                        }
+                    ],
+                    twitter: [
+                        {
+                            content: "🍎 Apple's AI-powered iOS update is here! Privacy-first approach meets cutting-edge technology. The future of mobile AI looks bright! #Apple #AI #iOS",
+                            hashtags: "#Apple #AI #iOS #Privacy #Innovation",
+                            characterCount: 147
+                        }
+                    ],
+                    facebook: [
+                        {
+                            content: "Apple is revolutionizing mobile AI with their latest iOS update! 🚀\n\nKey highlights:\n✅ Advanced Siri with natural language processing\n✅ AI-powered photo editing\n✅ Privacy-first approach\n\nThis shows how technology companies can innovate while respecting user privacy. What are your thoughts on AI in mobile devices?\n\n#Apple #AI #Innovation #Privacy #Technology",
+                            hashtags: "#Apple #AI #Innovation #Privacy #Technology",
+                            characterCount: 398
+                        }
+                    ],
+                    instagram: [
+                        {
+                            content: "🍎✨ Apple's new AI features are changing the game! \n\nSwipe to see:\n📱 Enhanced Siri capabilities\n🎨 AI photo editing magic\n🔒 Privacy-first innovation\n\nThe future is here and it's incredibly exciting! What Apple feature are you most excited about?\n\n#Apple #AI #Innovation #Technology #iOS #Privacy #Future",
+                            hashtags: "#Apple #AI #Innovation #Technology #iOS #Privacy #Future",
+                            characterCount: 312
+                        }
+                    ]
+                }
+            },
+            microsoft: {
+                articles: [
+                    {
+                        title: "Microsoft Copilot Integration Transforms Office Productivity",
+                        source: "Business Insider • 1 hour ago",
+                        highlights: [
+                            "AI-powered Copilot now available across all Microsoft 365 applications",
+                            "Users report 40% increase in productivity with automated document creation",
+                            "Enterprise customers show strong adoption with 85% satisfaction rate"
+                        ]
+                    },
+                    {
+                        title: "Microsoft Azure Achieves Carbon Negative Status Ahead of Schedule",
+                        source: "Environmental Tech • 3 hours ago",
+                        highlights: [
+                            "Azure data centers now powered by 100% renewable energy",
+                            "Carbon capture technology removes more CO2 than operations produce",
+                            "Microsoft invests $1 billion in climate innovation fund"
+                        ]
+                    }
+                ],
+                social: {
+                    linkedin: [
+                        {
+                            content: "💼 Microsoft Copilot is transforming workplace productivity! With 40% productivity gains and 85% enterprise satisfaction, AI integration in Office 365 is proving its value. This is how AI should enhance human capabilities, not replace them.\n\n#Microsoft #AI #Productivity #Copilot #Office365",
+                            hashtags: "#Microsoft #AI #Productivity #Copilot #Office365",
+                            characterCount: 278
+                        }
+                    ],
+                    twitter: [
+                        {
+                            content: "🤖 Microsoft Copilot: 40% productivity boost, 85% satisfaction rate. AI that actually works! #Microsoft #Copilot #AI #Productivity",
+                            hashtags: "#Microsoft #Copilot #AI #Productivity",
+                            characterCount: 125
+                        }
+                    ],
+                    facebook: [
+                        {
+                            content: "Microsoft is leading the AI productivity revolution! 🚀\n\nCopilot integration across Office 365 is delivering real results:\n📈 40% increase in productivity\n😊 85% customer satisfaction\n⚡ Automated document creation\n\nThis is how AI should work - enhancing human capabilities rather than replacing them. Have you tried Copilot yet?\n\n#Microsoft #AI #Productivity #Office365 #Innovation",
+                            hashtags: "#Microsoft #AI #Productivity #Office365 #Innovation",
+                            characterCount: 425
+                        }
+                    ],
+                    instagram: [
+                        {
+                            content: "💻✨ Microsoft Copilot is changing how we work!\n\n📊 40% productivity boost\n😍 85% satisfaction rate\n🤖 AI-powered automation\n\nThe future of work is here and it's collaborative! How is AI changing your workflow?\n\n#Microsoft #Copilot #AI #Productivity #FutureOfWork #Innovation #Technology",
+                            hashtags: "#Microsoft #Copilot #AI #Productivity #FutureOfWork #Innovation #Technology",
+                            characterCount: 295
+                        }
+                    ]
+                }
+            },
+            google: {
+                articles: [
+                    {
+                        title: "Google Bard AI Receives Major Update with Multimodal Capabilities",
+                        source: "AI Weekly • 30 minutes ago",
+                        highlights: [
+                            "Bard can now process images, audio, and video alongside text",
+                            "Integration with Google Workspace enables seamless content creation",
+                            "New safety features prevent generation of harmful or biased content"
+                        ]
+                    }
+                ],
+                social: {
+                    linkedin: [
+                        {
+                            content: "🧠 Google Bard's multimodal capabilities represent a significant leap in AI technology. Processing images, audio, and video alongside text opens new possibilities for content creation and analysis. The integration with Google Workspace will transform how we work with information.\n\n#Google #AI #Bard #Innovation #Multimodal",
+                            hashtags: "#Google #AI #Bard #Innovation #Multimodal",
+                            characterCount: 325
+                        }
+                    ],
+                    twitter: [
+                        {
+                            content: "🎯 Google Bard now handles images, audio, video + text! Multimodal AI is here and it's impressive. #Google #Bard #AI #Multimodal",
+                            hashtags: "#Google #Bard #AI #Multimodal",
+                            characterCount: 118
+                        }
+                    ],
+                    facebook: [
+                        {
+                            content: "Google Bard just got a major upgrade! 🚀\n\nNew multimodal capabilities:\n🖼️ Image processing\n🎵 Audio analysis\n🎥 Video understanding\n📝 Text generation\n\nPlus seamless Google Workspace integration and enhanced safety features. This is the future of AI assistants!\n\nWhat would you use multimodal AI for?\n\n#Google #Bard #AI #Innovation #Technology",
+                            hashtags: "#Google #Bard #AI #Innovation #Technology",
+                            characterCount: 378
+                        }
+                    ],
+                    instagram: [
+                        {
+                            content: "🌟 Google Bard's new superpowers! \n\n✨ Processes images, audio, video\n🔗 Google Workspace integration\n🛡️ Enhanced safety features\n🎨 Creative content generation\n\nAI that understands everything! What creative project would you tackle with multimodal AI?\n\n#Google #Bard #AI #Multimodal #Innovation #Creative #Technology #Future",
+                            hashtags: "#Google #Bard #AI #Multimodal #Innovation #Creative #Technology #Future",
+                            characterCount: 335
+                        }
+                    ]
+                }
+            },
+            tesla: {
+                articles: [
+                    {
+                        title: "Tesla Cybertruck Deliveries Begin with Strong Customer Response",
+                        source: "Auto News • 4 hours ago",
+                        highlights: [
+                            "First 1,000 Cybertruck units delivered to customers nationwide",
+                            "Advanced autopilot features receive positive safety ratings",
+                            "Production ramp-up targets 200,000 units annually by 2025"
+                        ]
+                    }
+                ],
+                social: {
+                    linkedin: [
+                        {
+                            content: "⚡ Tesla Cybertruck deliveries mark a new era in electric vehicles. The combination of innovative design, advanced autopilot, and sustainable manufacturing shows how companies can disrupt traditional industries while building for the future.\n\n#Tesla #Cybertruck #Innovation #Sustainability #ElectricVehicles",
+                            hashtags: "#Tesla #Cybertruck #Innovation #Sustainability #ElectricVehicles",
+                            characterCount: 298
+                        }
+                    ],
+                    twitter: [
+                        {
+                            content: "🚛⚡ Tesla Cybertruck deliveries begin! 1,000 units delivered, 200K annual target by 2025. The future of trucks is electric! #Tesla #Cybertruck",
+                            hashtags: "#Tesla #Cybertruck #ElectricVehicles",
+                            characterCount: 140
+                        }
+                    ],
+                    facebook: [
+                        {
+                            content: "The Tesla Cybertruck is finally here! 🚛⚡\n\nDelivery highlights:\n✅ First 1,000 units delivered\n✅ Advanced autopilot features\n✅ Positive safety ratings\n✅ 200,000 annual production target\n\nThis isn't just a truck - it's a statement about the future of transportation. The unique design and cutting-edge technology are reshaping what we expect from vehicles.\n\nWould you drive a Cybertruck?\n\n#Tesla #Cybertruck #ElectricVehicles #Innovation #Future",
+                            hashtags: "#Tesla #Cybertruck #ElectricVehicles #Innovation #Future",
+                            characterCount: 485
+                        }
+                    ],
+                    instagram: [
+                        {
+                            content: "🚛⚡ Cybertruck era begins!\n\n🎯 1,000 delivered\n🤖 Advanced autopilot\n⭐ Great safety ratings\n📈 200K/year by 2025\n\nThe future of trucks is angular, electric, and absolutely revolutionary! What do you think of the Cybertruck design?\n\n#Tesla #Cybertruck #ElectricVehicles #Future #Innovation #Design #Technology #Sustainable",
+                            hashtags: "#Tesla #Cybertruck #ElectricVehicles #Future #Innovation #Design #Technology #Sustainable",
+                            characterCount: 345
+                        }
+                    ]
+                }
+            },
+            amazon: {
+                articles: [
+                    {
+                        title: "Amazon Prime Air Drone Delivery Expands to 50 New Cities",
+                        source: "Logistics Today • 6 hours ago",
+                        highlights: [
+                            "Autonomous drones deliver packages within 30 minutes",
+                            "Advanced AI navigation ensures safe delivery in urban environments",
+                            "Customer satisfaction rate exceeds 95% for drone deliveries"
+                        ]
+                    }
+                ],
+                social: {
+                    linkedin: [
+                        {
+                            content: "🚁 Amazon Prime Air's expansion to 50 cities demonstrates the maturation of drone delivery technology. 30-minute delivery times and 95% customer satisfaction show how innovation can enhance customer experience while creating operational efficiency.\n\n#Amazon #Innovation #Logistics #Drones #PrimeAir",
+                            hashtags: "#Amazon #Innovation #Logistics #Drones #PrimeAir",
+                            characterCount: 298
+                        }
+                    ],
+                    twitter: [
+                        {
+                            content: "📦🚁 Amazon Prime Air expands to 50 cities! 30-min drone delivery with 95% satisfaction. The future of logistics is airborne! #Amazon #Drones",
+                            hashtags: "#Amazon #Drones #PrimeAir #Logistics",
+                            characterCount: 135
+                        }
+                    ],
+                    facebook: [
+                        {
+                            content: "Amazon Prime Air is taking flight! 🚁📦\n\nExpansion highlights:\n✈️ Now in 50 cities\n⏰ 30-minute delivery times\n🤖 AI-powered navigation\n😊 95% customer satisfaction\n\nThis technology is transforming how we think about delivery and logistics. Imagine getting your essentials delivered by drone in just 30 minutes!\n\nWould you trust a drone with your packages?\n\n#Amazon #PrimeAir #Drones #Innovation #Logistics #Future",
+                            hashtags: "#Amazon #PrimeAir #Drones #Innovation #Logistics #Future",
+                            characterCount: 445
+                        }
+                    ],
+                    instagram: [
+                        {
+                            content: "🚁✨ Amazon drones are everywhere!\n\n📍 50 new cities\n⚡ 30-minute delivery\n🎯 95% satisfaction\n🤖 AI navigation\n\nThe sky is literally the limit for delivery innovation! Have you seen a Prime Air drone in your neighborhood?\n\n#Amazon #PrimeAir #Drones #Delivery #Innovation #Technology #Future #Logistics #AI",
+                            hashtags: "#Amazon #PrimeAir #Drones #Delivery #Innovation #Technology #Future #Logistics #AI",
+                            characterCount: 315
+                        }
+                    ]
+                }
+            },
+            accenture: {
+                articles: [
+                    {
+                        title: "Accenture Launches Revolutionary AI-Powered Business Transformation Platform",
+                        source: "Business Technology News • 2 hours ago",
+                        highlights: [
+                            "New platform combines generative AI with industry expertise to accelerate digital transformation",
+                            "Accenture reports 40% faster project delivery times using AI-assisted consulting methodologies",
+                            "Partnership with leading cloud providers enables seamless enterprise-scale implementations"
+                        ]
+                    },
+                    {
+                        title: "Accenture Acquires Leading Data Analytics Firm to Strengthen AI Capabilities",
+                        source: "Consulting Weekly • 5 hours ago",
+                        highlights: [
+                            "Strategic acquisition adds 2,000 data scientists and AI specialists to Accenture's workforce",
+                            "Combined expertise will serve Fortune 500 companies across healthcare, finance, and retail sectors",
+                            "Investment reinforces Accenture's position as leader in AI-driven business transformation"
+                        ]
+                    }
+                ],
+                social: {
+                    linkedin: [
+                        {
+                            content: "🚀 Accenture is revolutionizing business transformation with AI! Our new platform combines cutting-edge generative AI with deep industry expertise, delivering 40% faster project outcomes for our clients.\n\nThis is the future of consulting - where human insight meets artificial intelligence to solve complex business challenges.\n\n#Accenture #AI #DigitalTransformation #Innovation #Consulting #BusinessStrategy",
+                            hashtags: "#Accenture #AI #DigitalTransformation #Innovation #Consulting #BusinessStrategy",
+                            characterCount: 398
+                        }
+                    ],
+                    twitter: [
+                        {
+                            content: "🤖 Accenture's new AI platform is changing the game! 40% faster delivery + human expertise = transformation at scale. The future of consulting is here! #Accenture #AI #Innovation",
+                            hashtags: "#Accenture #AI #Innovation #Consulting",
+                            characterCount: 178
+                        }
+                    ],
+                    facebook: [
+                        {
+                            content: "Exciting developments at Accenture! 🚀\n\nOur new AI-powered transformation platform is revolutionizing how we serve clients:\n\n✅ 40% faster project delivery\n✅ Generative AI + human expertise\n✅ Enterprise-scale implementations\n✅ Industry-specific solutions\n\nThis represents the next evolution of consulting - where technology amplifies human creativity and strategic thinking to solve the world's most complex business challenges.\n\nWhat business transformation challenges would you tackle with AI?\n\n#Accenture #AI #DigitalTransformation #Innovation #Consulting #Future",
+                            hashtags: "#Accenture #AI #DigitalTransformation #Innovation #Consulting #Future",
+                            characterCount: 578
+                        }
+                    ],
+                    instagram: [
+                        {
+                            content: "🚀✨ Accenture + AI = Game Changer!\n\n🤖 Generative AI platform\n⚡ 40% faster delivery\n🎯 Industry expertise\n🌍 Global scale\n\nWe're not just adapting to the AI revolution - we're leading it! Combining human insight with artificial intelligence to transform businesses worldwide.\n\n#Accenture #AI #Innovation #DigitalTransformation #Consulting #Future #Technology #BusinessStrategy",
+                            hashtags: "#Accenture #AI #Innovation #DigitalTransformation #Consulting #Future #Technology #BusinessStrategy",
+                            characterCount: 398
+                        }
+                    ]
+                }
+            },
+            wipro: {
+                articles: [
+                    {
+                        title: "Wipro Unveils Next-Generation Cloud-Native Development Platform",
+                        source: "Tech Innovation Today • 1 hour ago",
+                        highlights: [
+                            "New platform reduces application development time by 60% using automated DevOps pipelines",
+                            "Wipro's cloud-first approach helps enterprises migrate legacy systems to modern architectures",
+                            "Platform integrates AI-powered code generation and testing capabilities for faster deployment"
+                        ]
+                    },
+                    {
+                        title: "Wipro Partners with Major Healthcare Systems for Digital Health Innovation",
+                        source: "Healthcare IT News • 4 hours ago",
+                        highlights: [
+                            "Strategic partnerships focus on AI-driven patient care and operational efficiency solutions",
+                            "Wipro's healthcare platform processes over 10 million patient records with 99.9% accuracy",
+                            "Digital health initiatives expected to improve patient outcomes while reducing costs by 25%"
+                        ]
+                    }
+                ],
+                social: {
+                    linkedin: [
+                        {
+                            content: "💡 Wipro is transforming enterprise development with our next-generation cloud-native platform! 60% faster development cycles and AI-powered automation are helping our clients accelerate their digital journey.\n\nFrom legacy modernization to cutting-edge cloud solutions, we're enabling businesses to innovate at the speed of thought.\n\n#Wipro #CloudNative #DigitalTransformation #AI #DevOps #Innovation #Enterprise",
+                            hashtags: "#Wipro #CloudNative #DigitalTransformation #AI #DevOps #Innovation #Enterprise",
+                            characterCount: 445
+                        }
+                    ],
+                    twitter: [
+                        {
+                            content: "🚀 Wipro's new cloud platform: 60% faster development + AI automation = digital transformation at scale! The future of enterprise tech is here. #Wipro #CloudNative #AI",
+                            hashtags: "#Wipro #CloudNative #AI #DigitalTransformation",
+                            characterCount: 168
+                        }
+                    ],
+                    facebook: [
+                        {
+                            content: "Wipro is revolutionizing enterprise technology! 🚀\n\nOur latest innovations:\n🌥️ Cloud-native development platform\n⚡ 60% faster development cycles\n🤖 AI-powered automation\n🏥 Healthcare digital transformation\n📊 99.9% accuracy in patient data processing\n\nWe're not just building technology - we're crafting the digital future for enterprises worldwide. From healthcare to finance, our solutions are making a real difference in people's lives.\n\nWhat digital transformation challenge would you tackle first?\n\n#Wipro #DigitalTransformation #CloudNative #AI #Healthcare #Innovation #Enterprise",
+                            hashtags: "#Wipro #DigitalTransformation #CloudNative #AI #Healthcare #Innovation #Enterprise",
+                            characterCount: 612
+                        }
+                    ],
+                    instagram: [
+                        {
+                            content: "💻✨ Wipro is coding the future!\n\n🌥️ Cloud-native platform\n⚡ 60% faster development\n🤖 AI automation\n🏥 Healthcare innovation\n📈 Digital transformation\n\nFrom legacy systems to cutting-edge cloud solutions, we're helping enterprises leap into the digital age! Innovation isn't just what we do - it's who we are.\n\n#Wipro #DigitalTransformation #CloudNative #AI #Innovation #Technology #Enterprise #Future #Healthcare",
+                            hashtags: "#Wipro #DigitalTransformation #CloudNative #AI #Innovation #Technology #Enterprise #Future #Healthcare",
+                            characterCount: 445
+                        }
+                    ]
+                }
+            }
+        };
+
+        // DOM elements
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const loadingState = document.getElementById('loadingState');
+        const resultsSection = document.getElementById('resultsSection');
+        const newsContainer = document.getElementById('newsContainer');
+        const socialContainer = document.getElementById('socialContainer');
+        const platformTabs = document.querySelectorAll('.platform-tab');
+        const suggestionChips = document.querySelectorAll('.suggestion-chip');
+
+        let currentPlatform = 'linkedin';
+        let currentData = null;
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function () {
+            searchInput.focus();
+
+            // Add event listeners
+            searchBtn.addEventListener('click', performSearch);
+            searchInput.addEventListener('keypress', handleKeyPress);
+
+            // Platform tab switching
+            platformTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const platform = tab.dataset.platform;
+                    switchPlatform(platform);
+                });
+            });
+
+            // Suggestion chips
+            suggestionChips.forEach(chip => {
+                chip.addEventListener('click', () => {
+                    const company = chip.dataset.company;
+                    searchInput.value = company;
+                    performSearch();
+                });
+            });
+        });
+
+        function handleKeyPress(e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        }
+
+        function performSearch() {
+            const query = searchInput.value.trim().toLowerCase();
+            if (!query) {
+                searchInput.focus();
+                return;
+            }
+
+            // Apply company theme immediately
+            applyCompanyTheme(query);
+
+            // Show loading state
+            loadingState.style.display = 'block';
+            resultsSection.classList.remove('show');
+            searchBtn.disabled = true;
+            searchBtn.textContent = '⏳ Searching...';
+
+            // Simulate realistic API delay
+            setTimeout(() => {
+                const data = mockData[query] || mockData['apple']; // Default to Apple if not found
+                currentData = data;
+                displayResults(data, query);
+
+                loadingState.style.display = 'none';
+                resultsSection.classList.add('show');
+                searchBtn.disabled = false;
+                searchBtn.innerHTML = '🔍 Search';
+
+                // Scroll to results
+                resultsSection.scrollIntoView({ behavior: 'smooth' });
+            }, Math.random() * 1000 + 1500); // 1.5-2.5 seconds
+        }
+
+        function displayResults(data, companyName) {
+            // Display news articles
+            newsContainer.innerHTML = data.articles.map(article => `
+                <article class="article">
+                    <h3>${article.title}</h3>
+                    <div class="source">📰 ${article.source}</div>
+                    <ul class="highlights">
+                        ${article.highlights.map(highlight => `<li>${highlight}</li>`).join('')}
+                    </ul>
+                </article>
+            `).join('');
+
+            // Display social content
+            displaySocialContent(data.social);
+        }
+
+        function displaySocialContent(socialData) {
+            const platformData = socialData[currentPlatform] || [];
+
+            if (platformData.length === 0) {
+                socialContainer.innerHTML = `
+                    <div style="text-align: center; padding: 2rem; color: #6b7280;">
+                        <p>No content available for ${currentPlatform}. Try a different platform!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            socialContainer.innerHTML = platformData.map((post, index) => `
+                <div class="social-post">
+                    <div class="post-content">${post.content.replace(/\n/g, '<br>')}</div>
+                    <div class="post-meta">
+                        <span class="hashtags">${post.hashtags}</span>
+                        <span>${post.characterCount} characters</span>
+                        <button class="copy-btn" onclick="copyToClipboard(\`${post.content.replace(/`/g, '\\`')}\`, this)" aria-label="Copy content to clipboard">
+                            📋 Copy
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function switchPlatform(platform) {
+            currentPlatform = platform;
+
+            // Update active tab
+            platformTabs.forEach(tab => {
+                const isActive = tab.dataset.platform === platform;
+                tab.classList.toggle('active', isActive);
+                tab.setAttribute('aria-selected', isActive);
+            });
+
+            // Update content
+            if (currentData) {
+                displaySocialContent(currentData.social);
+            }
+        }
+
+        function copyToClipboard(text, button) {
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(text).then(() => {
+                    showCopySuccess(button);
+                }).catch(() => {
+                    fallbackCopyToClipboard(text, button);
+                });
+            } else {
+                fallbackCopyToClipboard(text, button);
+            }
+        }
+
+        function fallbackCopyToClipboard(text, button) {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-999999px';
+            textArea.style.top = '-999999px';
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+
+            try {
+                document.execCommand('copy');
+                showCopySuccess(button);
+            } catch (err) {
+                console.error('Failed to copy text: ', err);
+                alert('Failed to copy to clipboard. Please copy manually.');
+            }
+
+            document.body.removeChild(textArea);
+        }
+
+        function showCopySuccess(button) {
+            const originalText = button.innerHTML;
+            button.innerHTML = '✅ Copied!';
+            button.style.background = '#059669';
+
+            setTimeout(() => {
+                button.innerHTML = originalText;
+                button.style.background = '#10b981';
+            }, 2000);
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function (e) {
+            // Ctrl/Cmd + K to focus search
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                searchInput.focus();
+                searchInput.select();
+            }
+        });
+
+        // Analytics (placeholder for future implementation)
+        function trackEvent(eventName, properties) {
+            console.log('Event:', eventName, properties);
+            // Add your analytics tracking here
+        }
+
+        // Track search events
+        function performSearchWithTracking() {
+            trackEvent('search_performed', {
+                query: searchInput.value.trim(),
+                timestamp: new Date().toISOString()
+            });
+            performSearch();
+        }
+    </script>
+</body>
+
+</html>

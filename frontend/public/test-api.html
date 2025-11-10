@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>API Test</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        button { padding: 10px 20px; font-size: 16px; margin: 10px 0; }
+        pre { background: #f5f5f5; padding: 15px; overflow: auto; }
+        .success { color: green; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <h1>Direct API Test</h1>
+    <button onclick="testBackend()">Test Backend API</button>
+    <button onclick="testMock()">Test Mock Data</button>
+    <div id="result"></div>
+
+    <script>
+        async function testBackend() {
+            const result = document.getElementById('result');
+            result.innerHTML = '<p>Testing backend API...</p>';
+            
+            try {
+                const response = await fetch('http://localhost:3001/api/news/Apple');
+                const data = await response.json();
+                
+                result.innerHTML = `
+                    <h2 class="success">✅ Backend API Working!</h2>
+                    <p><strong>Company:</strong> ${data.company?.name}</p>
+                    <p><strong>Articles:</strong> ${data.articles?.length}</p>
+                    <p><strong>First Article:</strong> ${data.articles?.[0]?.title}</p>
+                    <h3>Full Response:</h3>
+                    <pre>${JSON.stringify(data, null, 2)}</pre>
+                `;
+            } catch (error) {
+                result.innerHTML = `
+                    <h2 class="error">❌ Backend API Failed</h2>
+                    <p>${error.message}</p>
+                    <pre>${error.stack}</pre>
+                `;
+            }
+        }
+
+        function testMock() {
+            const result = document.getElementById('result');
+            result.innerHTML = `
+                <h2>📦 This is what MOCK data looks like:</h2>
+                <p><strong>Title:</strong> Apple Unveils Revolutionary AI Features in Latest iOS Update</p>
+                <p><strong>Source:</strong> Tech News Daily</p>
+                <p>This is static/fake data for testing</p>
+            `;
+        }
+    </script>
+</body>
+</html>
