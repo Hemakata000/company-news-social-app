@@ -52,9 +52,9 @@ export class NewsService {
         aggregationResult.articles,
         company.name,
         {
-          minRelevanceScore: 0.4,
-          maxAge: 72, // 3 days
-          minQualityScore: 0.5,
+          minRelevanceScore: 0.2, // Relaxed from 0.4 to show more results
+          maxAge: 168, // 7 days (relaxed from 3 days)
+          minQualityScore: 0.3, // Relaxed from 0.5
           excludeDuplicates: true
         }
       );
