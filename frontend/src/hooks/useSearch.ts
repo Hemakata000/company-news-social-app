@@ -173,13 +173,13 @@ export const useSearch = () => {
       });
 
       // Transform API response to match our types
-      const articles: NewsArticle[] = response.articles.map(article => ({
+      const articles: NewsArticle[] = response.articles.map((article: any) => ({
         id: article.id,
         title: article.title,
         highlights: article.highlights || [],
-        sourceUrl: article.sourceUrl,
-        sourceName: article.sourceName,
-        publishedAt: new Date(article.publishedAt)
+        sourceUrl: article.source_url || article.sourceUrl,
+        sourceName: article.source_name || article.sourceName,
+        publishedAt: new Date(article.published_at || article.publishedAt)
       }));
 
       // Transform social content from API response
