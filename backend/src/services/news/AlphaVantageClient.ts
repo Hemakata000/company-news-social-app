@@ -21,6 +21,7 @@ export class AlphaVantageClient implements NewsAPIClient {
       const ticker = this.extractTickerFromCompanyName(companyName);
       console.log(`📊 Alpha Vantage: Searching for "${companyName}" with ticker "${ticker}"`);
       
+      // Try with ticker first
       const response = await this.client.get<AlphaVantageResponse>('', {
         params: {
           function: 'NEWS_SENTIMENT',
@@ -34,14 +35,14 @@ export class AlphaVantageClient implements NewsAPIClient {
       console.log(`📊 Alpha Vantage: Response received, feed items: ${response.data.feed?.length || 0}`);
 
       if (!response.data.feed || response.data.feed.length === 0) {
-        console.log(`📊 Alpha Vantage: No feed data for ${companyName}, trying without ticker...`);
-        // Try again with just the company name in topics
+        console.log(`📊 Alpha Vantage: No feed data for ${companyName}, trying with topics...`);
+        // Try with topics using technology sector
         const response2 = await this.client.get<AlphaVantageResponse>('', {
           params: {
             function: 'NEWS_SENTIMENT',
-            topics: companyName.toLowerCase().replace(/\s+/g, '_'),
+            topics: 'technology',
             apikey: this.apiKey,
-            limit: Math.min(limit, 50),
+            limit: Math.min(limit, 200), // Get more to filter
             sort: 'LATEST'
           }
         });
@@ -51,9 +52,16 @@ export class AlphaVantageClient implements NewsAPIClient {
           return []; // Return empty instead of throwing error
         }
         
-        const processed = this.processArticles(response2.data.feed, companyName);
+        // Filter articles that mention the company
+        const relevantArticles = response2.data.feed.filter(article => 
+          this.isRelevantToCompany(article, companyName)
+        );
+        
+        console.log(`📊 Alpha Vantage: Found ${relevantArticles.length} relevant articles from ${response2.data.feed.length} total`);
+        
+        const processed = this.processArticles(relevantArticles, companyName);
         console.log(`📊 Alpha Vantage: Processed ${processed.length} valid articles`);
-        return processed;
+        return processed.slice(0, limit);
       }
 
       const processed = this.processArticles(response.data.feed, companyName);
@@ -81,9 +89,16 @@ export class AlphaVantageClient implements NewsAPIClient {
       'nvidia': 'NVDA',
       'accenture': 'ACN',
       'wipro': 'WIT',
+      'tcs': 'TCS',
+      'tata consultancy': 'TCS',
+      'tata consultancy services': 'TCS',
+      'infosys': 'INFY',
       'ibm': 'IBM',
       'oracle': 'ORCL',
-      'salesforce': 'CRM'
+      'salesforce': 'CRM',
+      'cognizant': 'CTSH',
+      'hcl': 'HCLTECH.NS',
+      'tech mahindra': 'TECHM.NS'
     };
     
     const lowerName = companyName.toLowerCase().trim();
@@ -119,11 +134,40 @@ export class AlphaVantageClient implements NewsAPIClient {
   }
 
   private isRelevantToCompany(article: any, companyName: string): boolean {
-    const searchTerms = companyName.toLowerCase().split(' ');
     const articleText = `${article.title} ${article.summary}`.toLowerCase();
     
-    // Check if at least one search term appears in the article
-    return searchTerms.some(term => articleText.includes(term));
+    // Build list of search terms including aliases
+    const searchTerms = this.getCompanySearchTerms(companyName);
+    
+    // Check if any search term appears in the article
+    return searchTerms.some(term => articleText.includes(term.toLowerCase()));
+  }
+
+  private getCompanySearchTerms(companyName: string): string[] {
+    const lowerName = companyName.toLowerCase().trim();
+    const terms = [companyName];
+    
+    // Add aliases for better matching
+    const aliasMap: Record<string, string[]> = {
+      'tcs': ['TCS', 'Tata Consultancy Services', 'Tata Consultancy'],
+      'tata consultancy': ['TCS', 'Tata Consultancy Services'],
+      'tata consultancy services': ['TCS', 'Tata Consultancy'],
+      'infosys': ['Infosys', 'Infosys Limited'],
+      'accenture': ['Accenture', 'Accenture PLC'],
+      'wipro': ['Wipro', 'Wipro Limited'],
+      'cognizant': ['Cognizant', 'CTSH'],
+      'hcl': ['HCL Technologies', 'HCL Tech'],
+      'tech mahindra': ['Tech Mahindra', 'TechM']
+    };
+    
+    for (const [key, aliases] of Object.entries(aliasMap)) {
+      if (lowerName.includes(key)) {
+        terms.push(...aliases);
+        break;
+      }
+    }
+    
+    return terms;
   }
 
   private calculateRelevanceScore(article: any, companyName: string): number {

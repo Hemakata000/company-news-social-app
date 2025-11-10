@@ -21,9 +21,13 @@ export class NewsAPIClientImpl implements NewsAPIClient {
     try {
       console.log(`📰 NewsAPI: Searching for "${companyName}" with limit ${limit}`);
       
+      // Build search query with OR conditions for better results
+      const searchQuery = this.buildSearchQuery(companyName);
+      console.log(`📰 NewsAPI: Using search query: "${searchQuery}"`);
+      
       const response = await this.client.get<NewsAPIResponse>('/everything', {
         params: {
-          q: companyName, // Remove quotes for better results
+          q: searchQuery,
           sortBy: 'publishedAt',
           language: 'en',
           pageSize: Math.min(limit, 100), // NewsAPI max is 100
@@ -46,6 +50,41 @@ export class NewsAPIClientImpl implements NewsAPIClient {
       console.error('📰 NewsAPI Error:', error);
       throw this.handleError(error, 'NewsAPI');
     }
+  }
+
+  private buildSearchQuery(companyName: string): string {
+    // Map company names to alternative search terms for better results
+    const companyAliases: Record<string, string[]> = {
+      'tcs': ['TCS', 'Tata Consultancy Services', 'Tata Consultancy'],
+      'tata consultancy': ['TCS', 'Tata Consultancy Services'],
+      'tata consultancy services': ['TCS', 'Tata Consultancy'],
+      'infosys': ['Infosys', 'Infosys Limited'],
+      'accenture': ['Accenture', 'Accenture PLC'],
+      'wipro': ['Wipro', 'Wipro Limited'],
+      'cognizant': ['Cognizant', 'CTSH'],
+      'hcl': ['HCL Technologies', 'HCL Tech'],
+      'tech mahindra': ['Tech Mahindra', 'TechM']
+    };
+    
+    const lowerName = companyName.toLowerCase().trim();
+    
+    // Check if we have aliases for this company
+    for (const [key, aliases] of Object.entries(companyAliases)) {
+      if (lowerName.includes(key)) {
+        // Build OR query with all aliases
+        return aliases.map(alias => `"${alias}"`).join(' OR ');
+      }
+    }
+    
+    // For multi-word companies, try both quoted and OR versions
+    const words = companyName.trim().split(/\s+/);
+    if (words.length > 1) {
+      // Use quoted phrase OR individual words for better recall
+      return `"${companyName}" OR (${words.join(' AND ')})`;
+    }
+    
+    // Single word - just use it as is
+    return companyName;
   }
 
   private processArticles(articles: any[]): ProcessedNewsArticle[] {
