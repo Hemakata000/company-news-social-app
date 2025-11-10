@@ -8,6 +8,7 @@ import { newsConfig } from '../config/news.js';
 import { aiConfig, useFreeGenerator } from '../config/ai.js';
 import { validateCompanyName } from '../middleware/validation.js';
 import { handleApiError } from '../middleware/errorHandler.js';
+import { SimpleHighlightExtractor } from '../utils/simpleHighlightExtractor.js';
 
 const router = Router();
 
@@ -106,9 +107,14 @@ router.get('/:companyName',
             };
           } catch (error) {
             console.warn(`Failed to generate content for article ${article.id}:`, error);
+            // Use simple highlight extractor as fallback
+            const fallbackHighlights = SimpleHighlightExtractor.extractFromArticle(
+              article.title,
+              article.content || ''
+            );
             return {
               ...article,
-              highlights: [],
+              highlights: fallbackHighlights,
               socialContent: [],
               contentError: 'Failed to generate social content',
             };
@@ -121,9 +127,15 @@ router.get('/:companyName',
         if (result.status === 'fulfilled') {
           return result.value;
         } else {
+          // Use simple highlight extractor as fallback
+          const article = newsResult.articles[index];
+          const fallbackHighlights = SimpleHighlightExtractor.extractFromArticle(
+            article.title,
+            article.content || ''
+          );
           return {
-            ...newsResult.articles[index],
-            highlights: [],
+            ...article,
+            highlights: fallbackHighlights,
             socialContent: [],
             contentError: 'Content generation failed',
           };
