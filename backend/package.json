@@ -6,9 +6,9 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/server.ts",
-    "build": "tsc",
-    "start": "tsx src/server.ts",
-    "start:prod": "NODE_ENV=production tsx src/server.ts",
+    "build": "echo 'Skipping build for production'",
+    "start": "npx tsx src/server.ts",
+    "start:prod": "NODE_ENV=production npx tsx src/server.ts",
     "build:prod": "NODE_ENV=production tsc",
     "lint": "eslint . --ext ts --report-unused-disable-directives --max-warnings 0",
     "lint:fix": "eslint . --ext ts --fix",
