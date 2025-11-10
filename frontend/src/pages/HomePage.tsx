@@ -88,7 +88,7 @@ const HomePage: React.FC = () => {
 
   return (
     <div className="max-w-4xl mx-auto">
-      {/* TEST BANNER - REAL API MODE */}
+      {/* LIVE API - NO MOCK DATA */}
       <div style={{
         background: 'linear-gradient(90deg, #4CAF50, #45a049)',
         color: 'white',
@@ -100,7 +100,7 @@ const HomePage: React.FC = () => {
         borderRadius: '8px',
         boxShadow: '0 2px 8px rgba(0,0,0,0.2)'
       }}>
-        🌐 REAL API MODE ACTIVE - Fetching Live News from Internet!
+        ✅ LIVE API CONNECTED - Real News Data Only (Build: {new Date().toISOString()})
       </div>
       <div className="text-center mb-8">
         <h1 className="text-4xl font-bold text-gray-900 mb-4">
