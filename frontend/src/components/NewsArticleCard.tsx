@@ -11,14 +11,19 @@ const NewsArticleCard: React.FC<NewsArticleCardProps> = ({ article, className = 
     window.open(url, '_blank', 'noopener,noreferrer');
   };
 
-  const formatDate = (date: Date) => {
-    return new Intl.DateTimeFormat('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    }).format(new Date(date));
+  const formatDate = (date: Date | null | undefined) => {
+    if (!date) return 'Date unavailable';
+    try {
+      return new Intl.DateTimeFormat('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      }).format(new Date(date));
+    } catch (error) {
+      return 'Date unavailable';
+    }
   };
 
   return (
@@ -55,10 +60,14 @@ const NewsArticleCard: React.FC<NewsArticleCardProps> = ({ article, className = 
         {/* Article Metadata */}
         <div className="flex items-center text-sm text-gray-500 mb-4">
           <span className="font-medium text-gray-700">{article.sourceName}</span>
-          <span className="mx-2">•</span>
-          <time dateTime={article.publishedAt.toISOString()}>
-            {formatDate(article.publishedAt)}
-          </time>
+          {article.publishedAt && (
+            <>
+              <span className="mx-2">•</span>
+              <time dateTime={article.publishedAt.toISOString()}>
+                {formatDate(article.publishedAt)}
+              </time>
+            </>
+          )}
         </div>
 
         {/* Highlights Section */}
