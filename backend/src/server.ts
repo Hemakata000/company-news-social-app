@@ -32,11 +32,27 @@ const PORT = process.env.PORT || 3001;
 app.use(helmet());
 
 // CORS configuration with logging
-const corsOrigin = process.env.CORS_ORIGIN || 'http://localhost:3000';
-console.log('🌐 CORS enabled for origin:', corsOrigin);
+// Allow multiple origins for CORS
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://company-news-social-app.netlify.app',
+  process.env.CORS_ORIGIN
+].filter(Boolean);
+
+console.log('🌐 CORS enabled for origins:', allowedOrigins);
 
 app.use(cors({
-  origin: corsOrigin,
+  origin: (origin, callback) => {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      console.warn('⚠️  CORS blocked origin:', origin);
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
