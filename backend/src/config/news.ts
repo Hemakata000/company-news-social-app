@@ -2,8 +2,8 @@ import './env.js'; // Load environment variables first
 import { NewsServiceConfig } from '../services/news/types.js';
 
 export const newsConfig: NewsServiceConfig = {
-  newsApiKey: process.env.NEWS_API_KEY,
-  alphaVantageApiKey: process.env.ALPHA_VANTAGE_API_KEY,
+  newsApiKey: process.env.NEWSAPI_KEY || process.env.NEWS_API_KEY,
+  alphaVantageApiKey: process.env.ALPHA_VANTAGE_KEY || process.env.ALPHA_VANTAGE_API_KEY,
   maxArticlesPerSource: parseInt(process.env.MAX_ARTICLES_PER_SOURCE || '10'),
   timeoutMs: parseInt(process.env.NEWS_API_TIMEOUT_MS || '10000')
 };
@@ -11,7 +11,7 @@ export const newsConfig: NewsServiceConfig = {
 export const validateNewsConfig = (): void => {
   if (!newsConfig.newsApiKey && !newsConfig.alphaVantageApiKey) {
     console.warn('Warning: No news API keys configured. News aggregation will not work.');
-    console.warn('Please set NEWS_API_KEY and/or ALPHA_VANTAGE_API_KEY environment variables.');
+    console.warn('Please set NEWSAPI_KEY and/or ALPHA_VANTAGE_KEY environment variables.');
   }
   
   if (newsConfig.maxArticlesPerSource < 1 || newsConfig.maxArticlesPerSource > 100) {
