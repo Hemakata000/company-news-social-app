@@ -1,4 +1,4 @@
-Build Version: 2025-11-10-DATE-FIX-REBUILD
-Timestamp: 2025-11-10T12:30:00Z
-Status: Fixed date handling for null published dates
+Build Version: 2025-11-11-NEWS-ONLY
+Timestamp: 2025-11-11T10:00:00Z
+Status: Disabled social media features, news display only
 API: https://company-news-social-app.onrender.com

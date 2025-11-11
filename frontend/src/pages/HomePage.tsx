@@ -3,11 +3,11 @@ import { useSearch } from '../hooks/useSearch';
 import SearchInput from '../components/SearchInput';
 import SearchHistory from '../components/SearchHistory';
 import SearchSuggestions from '../components/SearchSuggestions';
-import SearchOptions from '../components/SearchOptions';
+// import SearchOptions from '../components/SearchOptions';
 import LoadingState from '../components/LoadingState';
 import ErrorState from '../components/ErrorState';
 import NewsHighlightsList from '../components/NewsHighlightsList';
-import SocialMediaContent from '../components/SocialMediaContent';
+// import SocialMediaContent from '../components/SocialMediaContent';
 import ContentRefreshIndicator from '../components/ContentRefreshIndicator';
 
 const HomePage: React.FC = () => {
@@ -75,12 +75,13 @@ const HomePage: React.FC = () => {
     setSearchOptions(options);
   }, []);
 
-  const handleContentRegenerate = useCallback((platform: keyof SocialMediaContent, options?: any) => {
-    regenerateContent(platform, {
-      tone: searchOptions.tone,
-      platforms: [platform]
-    });
-  }, [regenerateContent, searchOptions.tone]);
+  // Social media regeneration disabled
+  // const handleContentRegenerate = useCallback((platform: keyof SocialMediaContent, options?: any) => {
+  //   regenerateContent(platform, {
+  //     tone: searchOptions.tone,
+  //     platforms: [platform]
+  //   });
+  // }, [regenerateContent, searchOptions.tone]);
 
   // Memoized computed values
   const hasResults = useMemo(() => !loading && !error && newsData.length > 0, [loading, error, newsData.length]);
@@ -104,10 +105,10 @@ const HomePage: React.FC = () => {
       </div>
       <div className="text-center mb-8">
         <h1 className="text-4xl font-bold text-gray-900 mb-4">
-          Company News & Social Content Generator
+          Company News Aggregator
         </h1>
         <p className="text-xl text-gray-600 mb-8">
-          Get the latest company news and generate engaging social media content instantly
+          Get the latest company news and highlights instantly
         </p>
       </div>
 
@@ -133,16 +134,17 @@ const HomePage: React.FC = () => {
           onClearHistory={clearHistory}
         />
 
-        <SearchOptions
+        {/* Social Media Options Disabled */}
+        {/* <SearchOptions
           onOptionsChange={handleOptionsChange}
           disabled={loading}
-        />
+        /> */}
       </div>
 
       {/* Results Section */}
       {loading && (
         <LoadingState 
-          message="Fetching latest company news and generating content..." 
+          message="Fetching latest company news..." 
           size="large"
         />
       )}
@@ -166,8 +168,7 @@ const HomePage: React.FC = () => {
             Search for Company News
           </h3>
           <p className="text-gray-600 max-w-md mx-auto">
-            Enter a company name above to get the latest news highlights and generate 
-            social media content for LinkedIn, Twitter, Facebook, and Instagram.
+            Enter a company name above to get the latest news highlights and articles.
           </p>
         </div>
       )}
@@ -191,18 +192,18 @@ const HomePage: React.FC = () => {
             onRetry={handleRetry}
           />
 
-          {/* Social Media Content */}
-          {socialContent && (
+          {/* Social Media Content - DISABLED */}
+          {/* {socialContent && (
             <SocialMediaContent 
               content={socialContent}
               onContentRegenerate={handleContentRegenerate}
               isEditable={true}
               isRegenerating={isGeneratingContent}
             />
-          )}
+          )} */}
 
-          {/* Content Generation Error */}
-          {contentGenerationError && (
+          {/* Content Generation Error - DISABLED */}
+          {/* {contentGenerationError && (
             <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
               <div className="flex items-center">
                 <svg className="w-5 h-5 text-yellow-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -217,7 +218,7 @@ const HomePage: React.FC = () => {
                 </button>
               </div>
             </div>
-          )}
+          )} */}
 
           {/* Offline Mode Indicator */}
           {isOffline && (
