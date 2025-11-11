@@ -57,7 +57,7 @@ export default defineConfig(({ command, mode }) => {
     define: {
       __BUILD_TIMESTAMP__: JSON.stringify(new Date().toISOString()),
       __GIT_COMMIT__: JSON.stringify(process.env.GIT_COMMIT || 'unknown'),
-      __APP_VERSION__: JSON.stringify(process.env.npm_package_version || '1.0.0'),
+      __APP_VERSION__: JSON.stringify('1.0.1-date-fix'),
     },
     esbuild: {
       drop: mode === 'production' ? ['console', 'debugger'] : [],
